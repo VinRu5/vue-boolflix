@@ -35,11 +35,14 @@ export default {
 
     .film-container {
         color: $white;
+        margin-top: 12px;
+        margin-bottom: 12px;
 
         .film-inner {
             height: 350px;
             width: 100%;
             position: relative;
+            cursor: pointer;
             
             &:hover {
 

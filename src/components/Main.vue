@@ -1,7 +1,7 @@
 <template>
     <main class="row">
         <Film v-for="film in films" :key="film.id"
-            :imgURL="film.poster_path"
+            :imgURL="`https://image.tmdb.org/t/p/w500${film.poster_path}`"
             :title="film.title"
             :originalTitle="film.original_title"
             :vote="film.vote_average"
@@ -27,4 +27,9 @@ export default {
 
 <style lang="scss" scoped>
 
+    main {
+        height: calc(100vh - 50px);
+        overflow: auto;
+        
+    }
 </style>
