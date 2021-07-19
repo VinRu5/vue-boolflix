@@ -11,7 +11,7 @@
         <div class="search-bar col-4">
             <div class="search-inner">
                 <input type="text" v-model="inputSearch" @keyup.enter="$emit('search', inputSearch)">
-                <font-awesome-icon icon="search" class="search-icon" @clik="$emit('search', inputSearch)" />
+                <font-awesome-icon icon="search" class="search-icon" />
                 <div class="user-profile">BAMBINI</div>
                 <font-awesome-icon icon="bell" class="notice-icon" />
                 <div class="user-img"></div>

@@ -2,8 +2,7 @@
   <div id="app" class="container-fluid">
 
     <Header :navList="navList" @search="searchFilm" />
-    <Main :films="filteredFilm" />
-    {{ apiRequest }}
+    <Main :films="filteredFilms" />
 
   </div>
 </template>
@@ -21,40 +20,24 @@ export default {
   },
 
   created() {
-    axios.get('https://api.themoviedb.org/3/search/movie?api_key=f10ccd72e0d02b50384e2e5f35ea0e3b&query=ritorno+al+futuro')
+    axios.get('https://api.themoviedb.org/3/movie/popular?api_key=f10ccd72e0d02b50384e2e5f35ea0e3b')
       .then((res) => {
-        this.films = res.data.results;
+        this.popularFilms = res.data.results;
+        this.filteredFilms = this.popularFilms
+        console.log(this.popularFilms);
+        console.log(this.filteredFilms);
       })
   },
 
   computed: {
-    filteredFilm() {
-      return this.films.filter((film) => {
-        return film.title.includes(this.searchString);
-      })
-    },
-    apiRequest() {
-      let searchSplit = this.searchString.toLowerCase().split(' ');
-      let stringToFind = '';
-      console.log(this.searchString.split(' '))
-
-      searchSplit.forEach((string, index) => {
-        if (index === 0) {
-          stringToFind = string
-        } else {
-          stringToFind += `+${string}`;
-        }
-
-      })
-
-      console.log(`https://api.themoviedb.org/3/search/movie?api_key=f10ccd72e0d02b50384e2e5f35ea0e3b&query=${stringToFind}`)
-      return `https://api.themoviedb.org/3/search/movie?api_key=f10ccd72e0d02b50384e2e5f35ea0e3b&query=${stringToFind}`;
-    }
+    
+    
   },
 
   data() {
     return {
-      films: [],
+      popularFilms: [],
+      filteredFilms: [],
       searchString: '',
       navList: [
         {
@@ -93,15 +76,35 @@ export default {
 
   methods: {
     searchFilm(inputSearch) {
-      this.searchString = inputSearch;
-      // axios.get(this.apiRequest).then((res) => {
-      //   res.data.results.forEach((result) => {
-      //     this.films.push(result);
-      //   })
 
-      //   console.log(this.films);
-      // })
+      if (inputSearch.trim().length === 0) {
+        this.filteredFilms = this.popularFilms;
+      } else {
+        axios.get(this.apiRequest(inputSearch)).then((res) => {
+          this.filteredFilms = res.data.results;
+  
+          console.log(this.films);
+        })
+      }
+
       // TODO: da sistemare
+    },
+    apiRequest(input) {
+      let searchSplit = input.toLowerCase().split(' ');
+      let stringToFind = '';
+      console.log(this.searchString.split(' '))
+
+      searchSplit.forEach((string, index) => {
+        if (index === 0) {
+          stringToFind = string
+        } else {
+          stringToFind += `+${string}`;
+        }
+
+      })
+
+      console.log(`https://api.themoviedb.org/3/search/movie?api_key=f10ccd72e0d02b50384e2e5f35ea0e3b&query=${stringToFind}`)
+      return `https://api.themoviedb.org/3/search/movie?api_key=f10ccd72e0d02b50384e2e5f35ea0e3b&query=${stringToFind}`;
     }
   }
 }
