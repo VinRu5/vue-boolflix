@@ -11,11 +11,11 @@
         <div class="search-bar col-4">
             <div class="search-inner">
                 <input type="text" v-model="inputSearch" @keyup.enter="$emit('search', inputSearch)">
-                <font-awesome-icon icon="search" class="search-icon" />
+                <i class="fas fa-search search-icon"></i>
                 <div class="user-profile">BAMBINI</div>
-                <font-awesome-icon icon="bell" class="notice-icon" />
+                <i class="fas fa-bell notice-icon"></i>
                 <div class="user-img"></div>
-                <font-awesome-icon icon="sort-down" class="menu-icon" />
+                <i class="fas fa-sort-down menu-icon"></i>
             </div>
            
         </div>

@@ -24,8 +24,7 @@ export default {
       .then((res) => {
         this.popularFilms = res.data.results;
         this.filteredFilms = this.popularFilms
-        console.log(this.popularFilms);
-        console.log(this.filteredFilms);
+
       })
   },
 
@@ -103,8 +102,7 @@ export default {
 
       })
 
-      console.log(`https://api.themoviedb.org/3/search/movie?api_key=f10ccd72e0d02b50384e2e5f35ea0e3b&query=${stringToFind}`)
-      return `https://api.themoviedb.org/3/search/movie?api_key=f10ccd72e0d02b50384e2e5f35ea0e3b&query=${stringToFind}`;
+      return `https://api.themoviedb.org/3/search/multi?api_key=f10ccd72e0d02b50384e2e5f35ea0e3b&query=${stringToFind}`;
     }
   }
 }
@@ -112,4 +110,10 @@ export default {
 
 <style lang="scss">
 @import './style/app.scss';
+.pr {
+  width: 14px;
+  img {
+    width: 100%;
+  }
+}
 </style>
