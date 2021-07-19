@@ -24,30 +24,13 @@ export default {
   },
 
   created() {
-    axios.get('https://api.themoviedb.org/3/movie/popular?api_key=f10ccd72e0d02b50384e2e5f35ea0e3b')
-      .then((res) => {
-        this.popularFilms = res.data.results;
-        // this.filteredFilms = this.popularFilms
 
-      })
-
-    axios.get('https://api.themoviedb.org/3/tv/popular?api_key=f10ccd72e0d02b50384e2e5f35ea0e3b')
+    this.apiList.forEach((string) => {
+      axios.get(this.apiString(string))
       .then((res) => {
-        this.popularSeries = res.data.results;
-
+        this.apiAction(string, res);
       })
-
-    axios.get('https://api.themoviedb.org/3/list/7102094?api_key=f10ccd72e0d02b50384e2e5f35ea0e3b')
-      .then((res) => {
-        this.homeList = res.data.items;
-        this.filteredFilms = this.homeList;
-        console.log(this.homeList);
-      })
-    
-    axios.get('https://api.themoviedb.org/3/tv/airing_today?api_key=f10ccd72e0d02b50384e2e5f35ea0e3b')
-      .then((res) => {
-        this.recently = res.data.results;
-      })
+    })
   },
 
   computed: {
@@ -72,6 +55,12 @@ export default {
         }
       ],
       searchString: '',
+      apiList: [
+        '/list/7102094',
+        '/movie/popular',
+        '/tv/popular',
+        '/tv/airing_today'
+      ],
       navList: [
         {
           id: 0,
@@ -115,8 +104,7 @@ export default {
       } else {
         axios.get(this.apiRequest(inputSearch)).then((res) => {
           this.filteredFilms = res.data.results;
-  
-          console.log(this.films);
+
         })
       }
 
@@ -139,6 +127,31 @@ export default {
       })
 
       return `https://api.themoviedb.org/3/search/multi?api_key=f10ccd72e0d02b50384e2e5f35ea0e3b&query=${stringToFind}`;
+    },
+
+    apiString(string) {
+      return `https://api.themoviedb.org/3${string}?api_key=f10ccd72e0d02b50384e2e5f35ea0e3b`
+    },
+
+    apiAction(string, res) {
+      switch (string) {
+        case this.apiList[0]:
+          this.homeList = res.data.items;
+          this.filteredFilms = this.homeList;
+          break;
+
+        case this.apiList[1]:
+          this.popularFilms = res.data.results;
+          break;
+
+        case this.apiList[2]:
+          this.popularSeries = res.data.results;
+          break;
+
+        case this.apiList[3]:
+          this.recently = res.data.results;
+          break;
+      }
     },
 
     changeView(value) {
