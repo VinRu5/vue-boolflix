@@ -1,9 +1,9 @@
 <template>
     <main class="row">
         <Film v-for="film in films" :key="film.id"
-            :imgURL="`https://image.tmdb.org/t/p/w500${film.poster_path}`"
-            :title="film.title"
-            :originalTitle="film.original_title"
+            :imgURL="imgNull(film)"
+            :title="film.title || film.name"
+            :originalTitle="film.original_title || film.original_name"
             :vote="film.vote_average"
             :language="film.original_language"
             class="col-6 col-md-3 col-lg-2 px-1"
@@ -19,8 +19,19 @@ export default {
     components: {
         Film
     },
+
     props: {
         films: Array,
+    },
+
+    methods: {
+        imgNull(film) {
+            if (film.poster_path === null) {
+                return require('../assets/back-netflix.jpeg');
+            }
+
+            return `https://image.tmdb.org/t/p/w500${film.poster_path}`;
+        }
     }
 }
 </script>
