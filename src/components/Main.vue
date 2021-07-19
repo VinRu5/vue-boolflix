@@ -1,5 +1,6 @@
 <template>
     <main class="row">
+        <div v-if="films.length === 0" class="no-search col-12">Nessun risultato trovato</div>
         <Film v-for="film in films" :key="film.id"
             :imgURL="imgNull(film)"
             :title="film.title || film.name"
@@ -31,7 +32,8 @@ export default {
             }
 
             return `https://image.tmdb.org/t/p/w500${film.poster_path}`;
-        }
+        },
+
     }
 }
 </script>
@@ -41,5 +43,12 @@ export default {
     main {
         height: calc(100vh - 50px);
         overflow: auto;
+
+        .no-search {
+            text-align: center;
+            font-weight: bold;
+            font-size: 34px;
+            padding-top: 24px;
+        }
     }
 </style>

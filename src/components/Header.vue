@@ -1,17 +1,21 @@
 <template>
     <header class="row align-items-center">
-        <div class="logo-container col-1">
+        <div class="logo-container col-3 col-lg-1">
             <img src="../assets/Netflix-Logo.png" alt="Logo Netflix">
         </div>
         <nav class="col">
             <ul>
-                <li v-for="item in navList" :key="item.id">{{ item.text }}</li>
+                <li v-for="item in navList" :key="item.id"
+                    @click="$emit('clickMenu', item.value)"
+                >
+                    {{ item.text }}
+                </li>
             </ul>
         </nav>
-        <div class="search-bar col-4">
+        <div class="search-bar col-1 col-lg-4">
             <div class="search-inner">
                 <input type="text" v-model="inputSearch" @keyup.enter="$emit('search', inputSearch)">
-                <i class="fas fa-search search-icon"></i>
+                <i class="fas fa-search search-icon" @click="$emit('search', inputSearch)"></i>
                 <div class="user-profile">BAMBINI</div>
                 <i class="fas fa-bell notice-icon"></i>
                 <div class="user-img"></div>
@@ -28,10 +32,11 @@ export default {
     name: 'Header',
     props: {
         navList: Array,
+        inputSearch: String
     },
     data() {
         return {
-            inputSearch: ''
+            // inputSearch: ''
         }
     }
 }
@@ -91,6 +96,10 @@ export default {
                     background-color: $bg-color;
                     border-radius: 6px;
                     color: $white;
+                }
+
+                .search-icon {
+                    cursor: pointer;
                 }
             }
         }
