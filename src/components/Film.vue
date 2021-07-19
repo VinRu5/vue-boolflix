@@ -4,16 +4,15 @@
             <img :src="imgURL" :alt="`copertina di ${title}`">
             <div class="opacity"></div>
             <div class="info-container">
-                <div class="info-inner row">
+                <div class="info-inner row align-items-center">
                     <div class="title-film col-12">{{ title }}</div>
-                    <div class="original-title-film col-7">{{ originalTitle }}</div>
-                    <div class="preferences col-3">
+                    <div class="original-title-film col-6">{{ originalTitle }}</div>
+                    <div class="preferences col-6">
                         <div class="vote-film">
                             <i v-for="star in voteToStars" :key="star.id" class="fas fa-star"></i>
                             <i v-for="star in emptyStars" :key="star.id" class="far fa-star"></i>
                         </div>
                         <div class="lang-film">
-                            {{ language }}
                             <img :src="flagNation" :alt="language">
                         </div>
                     </div>
@@ -120,7 +119,7 @@ export default {
                 height: 100%;
                 width: 100%;
                 padding: 12px 6px;
-                background: rgba(0, 0, 0, .3);
+                background: rgba(0, 0, 0, .5);
                 display: none;
             }
     
@@ -134,6 +133,8 @@ export default {
     
                 .title-film {
                     text-align: center;
+                    font-weight: bold;
+                    margin-bottom: 6px;
     
                 }
     
@@ -141,11 +142,25 @@ export default {
                     font-size: 12px;
                     color: $link;
                     text-align: center;
+                    font-weight: bold;
                 }
 
                 .preferences {
                     font-size: 12px;
                     text-align: right;
+
+                    .vote-film {
+                        font-size: 10px;
+                        color: #fdd017;
+                    }
+
+                    .lang-film {
+                        text-align: center;
+
+                        img {
+                            width: 20px;
+                        }
+                    }
                 }
             }
 

@@ -6,7 +6,7 @@
             :originalTitle="film.original_title"
             :vote="film.vote_average"
             :language="film.original_language"
-            class="col-2"
+            class="col-6 col-md-3 col-lg-2 px-1"
         />
     </main>
 </template>

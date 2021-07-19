@@ -85,6 +85,13 @@ export default {
                     height: 25px;
                     background-color: seagreen;
                 }
+
+                input {
+                    border: 1px solid $white;
+                    background-color: $bg-color;
+                    border-radius: 6px;
+                    color: $white;
+                }
             }
         }
     }
