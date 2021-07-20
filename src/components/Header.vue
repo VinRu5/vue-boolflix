@@ -32,11 +32,11 @@ export default {
     name: 'Header',
     props: {
         navList: Array,
-        inputSearch: String
+        // inputSearch: String
     },
     data() {
         return {
-            // inputSearch: ''
+            inputSearch: ''
         }
     }
 }

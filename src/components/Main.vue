@@ -1,14 +1,42 @@
 <template>
     <main class="row">
-        <div v-if="films.length === 0" class="no-search col-12">Nessun risultato trovato</div>
-        <Film v-for="film in films" :key="film.id"
-            :imgURL="imgNull(film)"
-            :title="film.title || film.name"
-            :originalTitle="film.original_title || film.original_name"
-            :vote="film.vote_average"
-            :language="film.original_language"
-            class="col-6 col-md-3 col-lg-2 px-1"
-        />
+        <div v-if="flagFilmsFound || flagSeriesFound" class="no-search col-12">Nessun risultato trovato</div>
+        <div v-if="filmsFound.length === 0 || seriesFound.length === 0" class="col-12">
+            <div class="row">
+                <Film v-for="film in films" :key="film.id"
+                    :imgURL="imgNull(film)"
+                    :title="film.title || film.name"
+                    :originalTitle="film.original_title || film.original_name"
+                    :vote="film.vote_average"
+                    :language="film.original_language"
+                    class="col-6 col-md-3 col-lg-2 px-1"
+                />
+            </div>
+        </div>
+        <div v-else class="col-12">
+            <div class="row">
+                <div class="title-section col-12">Film</div>
+                <Film v-for="film in filmsFound" :key="film.id"
+                    :imgURL="imgNull(film)"
+                    :title="film.title || film.name"
+                    :originalTitle="film.original_title || film.original_name"
+                    :vote="film.vote_average"
+                    :language="film.original_language"
+                    class="col-6 col-md-3 col-lg-2 px-1"
+                />
+            </div>
+            <div class="row">
+                <div class="title-section col-12">Serie TV</div>
+                <Film v-for="film in seriesFound" :key="film.id"
+                    :imgURL="imgNull(film)"
+                    :title="film.title || film.name"
+                    :originalTitle="film.original_title || film.original_name"
+                    :vote="film.vote_average"
+                    :language="film.original_language"
+                    class="col-6 col-md-3 col-lg-2 px-1"
+                />
+            </div>
+        </div>
     </main>
 </template>
 
@@ -23,6 +51,10 @@ export default {
 
     props: {
         films: Array,
+        filmsFound: Array,
+        seriesFound: Array,
+        flagSeriesFound: Boolean,
+        flagFilmsFound: Boolean
     },
 
     methods: {
@@ -49,6 +81,11 @@ export default {
             font-weight: bold;
             font-size: 34px;
             padding-top: 24px;
+        }
+
+        .title-section {
+            font-size: 24px;
+            font-weight: bold;
         }
     }
 </style>

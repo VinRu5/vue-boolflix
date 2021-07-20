@@ -2,11 +2,15 @@
   <div id="app" class="container-fluid">
 
     <Header :navList="navList" 
-      :inputSearch="searchString" 
       @search="searchFilm" 
       @clickMenu="changeView"
     />
-    <Main :films="filteredFilms" />
+    <Main :films="filteredFilms" 
+      :filmsFound="filmsFound"
+      :seriesFound="seriesFound"
+      :flagSeriesFound="flagSeriesFound"
+      :flagFilmsFound="flagFilmsFound"
+    />
 
   </div>
 </template>
@@ -26,11 +30,17 @@ export default {
   created() {
 
     this.apiList.forEach((string) => {
-      axios.get(this.apiString(string))
+      axios.get(this.apiURL(string))
       .then((res) => {
         this.apiAction(string, res);
       })
     })
+
+    axios.get(this.apiURL('/discover/tv', 'with_networks', '213'))
+      .then((res) => {
+        this.original = res.data.results;
+        console.log(this.original);
+      })
   },
 
   computed: {
@@ -43,8 +53,13 @@ export default {
       popularFilms: [],
       filteredFilms: [],
       popularSeries: [],
+      original: [],
       homeList: [],
       recently: [],
+      seriesFound: [],
+      filmsFound: [],
+      flagSeriesFound: false,
+      flagFilmsFound: false,
       myFilms: [
         {
           title: 'Aggiungi Contenuti',
@@ -100,10 +115,26 @@ export default {
     searchFilm(inputSearch) {
 
       if (inputSearch.trim().length === 0) {
-        this.filteredFilms = this.popularFilms;
+
+        this.filteredFilms = this.homeList;
+        this.flagSeriesFound = false;
+        this.flagFilmsFound= false;
+        this.filmsFound = [];
+        this.seriesFound = [];
       } else {
-        axios.get(this.apiRequest(inputSearch)).then((res) => {
-          this.filteredFilms = res.data.results;
+        axios.get(this.apiURL('/search/movie', 'query', inputSearch)).then((res) => {
+          this.filmsFound = res.data.results;
+          if (this.filmsFound.length > 0) {
+            this.flagFilmsFound = true;
+          }
+
+        })
+
+        axios.get(this.apiURL('/search/tv', 'query', inputSearch)).then((res) => {
+          this.seriesFound = res.data.results;
+          if (this.seriesFound.length > 0) {
+            this.flagSeriesFound = true;
+          }
 
         })
       }
@@ -112,25 +143,15 @@ export default {
       // TODO: da sistemare
     },
 
-    apiRequest(input) {
-      let searchSplit = input.toLowerCase().split(' ');
-      let stringToFind = '';
-      console.log(this.searchString.split(' '))
+    // metodi per dinamicizzare API
+    apiURL(string, key, input) {
+      if (typeof input === 'undefined' || typeof key === 'undefined') {
 
-      searchSplit.forEach((string, index) => {
-        if (index === 0) {
-          stringToFind = string
-        } else {
-          stringToFind += `+${string}`;
-        }
+        return `https://api.themoviedb.org/3${string}?api_key=f10ccd72e0d02b50384e2e5f35ea0e3b`
+      } else {
 
-      })
-
-      return `https://api.themoviedb.org/3/search/multi?api_key=f10ccd72e0d02b50384e2e5f35ea0e3b&query=${stringToFind}`;
-    },
-
-    apiString(string) {
-      return `https://api.themoviedb.org/3${string}?api_key=f10ccd72e0d02b50384e2e5f35ea0e3b`
+        return `https://api.themoviedb.org/3${string}?api_key=f10ccd72e0d02b50384e2e5f35ea0e3b&${key}=${input}`
+      }
     },
 
     apiAction(string, res) {
@@ -153,6 +174,7 @@ export default {
           break;
       }
     },
+    // ---------------------------------------------------------------------
 
     changeView(value) {
       console.log(value);
@@ -171,7 +193,7 @@ export default {
           break;
 
         case 'original':
-          this.filteredFilms = this.homeList;
+          this.filteredFilms = this.original;
           break;
 
         case 'add':
@@ -189,10 +211,4 @@ export default {
 
 <style lang="scss">
 @import './style/app.scss';
-.pr {
-  width: 14px;
-  img {
-    width: 100%;
-  }
-}
 </style>

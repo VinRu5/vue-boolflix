@@ -41,6 +41,7 @@ export default {
     },
     computed: {
         flagNation() {
+            
             return require(`../assets/${this.language}.png`)
         }
     },
