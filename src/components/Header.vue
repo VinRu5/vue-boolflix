@@ -18,7 +18,7 @@
             </div>
         </nav>
         <div class="col-2">
-            <input v-if="flagViewSearchBar" type="text" ref="input" v-model="inputSearch" @keyup.enter="$emit('search', inputSearch)">
+            <input v-if="flagViewSearchBar" type="text" ref="input" v-model="inputSearch" @keyup.enter="passValue">
         </div>
         <div class="search-bar col-4 col-md-2 col-lg-3">
             <div class="burger-menu d-block d-lg-none" >
@@ -45,7 +45,6 @@ export default {
     name: 'Header',
     props: {
         navList: Array,
-        // inputSearch: String
     },
 
     data() {
@@ -58,7 +57,12 @@ export default {
     methods: {
         viewSearchBar() {
             this.flagViewSearchBar = !this.flagViewSearchBar;
-        }
+        },
+
+        passValue() {
+            this.$emit('search', this.inputSearch);
+            this.inputSearch = "";
+        },
     }
 }
 </script>

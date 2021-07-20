@@ -58,7 +58,6 @@ export default {
       recently: [],
       seriesFound: [],
       filmsFound: [],
-      
       flagSearch: false,
       myFilms: [
         {
@@ -69,7 +68,6 @@ export default {
           poster_path: null
         }
       ],
-      searchString: '',
       apiList: [
         '/list/7102094',
         '/movie/popular',
@@ -112,15 +110,21 @@ export default {
   },
 
   methods: {
+    resetFound() {
+      if (this.filmsFound.length > 0 || this.seriesFound.length > 0) {
+        this.filmsFound = [];
+        this.seriesFound = [];
+        console.log('cancello');
+      }
+    },
+
     searchFilm(inputSearch) {
 
       if (inputSearch.trim().length === 0) {
 
         this.filteredFilms = this.homeList;
-        this.flagSeriesFound = false;
         this.flagSearch= false;
-        this.filmsFound = [];
-        this.seriesFound = [];
+        this.resetFound();
       } else {
         axios.get(this.apiURL('/search/movie', 'query', inputSearch)).then((res) => {
           this.filmsFound = res.data.results;
@@ -136,20 +140,10 @@ export default {
 
         axios.get(this.apiURL('/search/tv', 'query', inputSearch)).then((res) => {
           this.seriesFound = res.data.results;
-          // if (this.seriesFound.length > 0) {
-          //   this.flagSeriesFound = true;
-          // }
 
         })
       }
-
-      // inputSearch = '';
-      // TODO: da sistemare
     },
-
-    // viewSearchBar() {
-
-    // },
 
     // metodi per dinamicizzare API
     apiURL(string, key, input) {
@@ -184,31 +178,38 @@ export default {
     },
     // ---------------------------------------------------------------------
 
+    // switch per menu generi
     changeView(value) {
       console.log(value);
 
       switch (value) {
         case 'home':
+          this.resetFound()
           this.filteredFilms = this.homeList;
           break;
 
         case 'serie':
+          this.resetFound()
           this.filteredFilms = this.popularSeries;
           break;
 
         case 'film':
+          this.resetFound()
           this.filteredFilms = this.popularFilms;
           break;
 
         case 'original':
+          this.resetFound()
           this.filteredFilms = this.original;
           break;
 
         case 'add':
+          this.resetFound()
           this.filteredFilms = this.recently;
           break;
 
         case 'my':
+          this.resetFound()
           this.filteredFilms = this.myFilms;
           break;
       }
