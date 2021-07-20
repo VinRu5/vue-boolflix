@@ -1,25 +1,32 @@
 <template>
     <header class="row align-items-center">
-        <div class="logo-container col-3 col-lg-1">
+        <div class="logo-container col-2 col-md-1">
             <img src="../assets/Netflix-Logo.png" alt="Logo Netflix">
         </div>
         <nav class="col">
-            <ul>
-                <li v-for="item in navList" :key="item.id"
-                    @click="$emit('clickMenu', item.value)"
-                >
-                    {{ item.text }}
-                </li>
-            </ul>
+            <div class="d-none d-md-block">
+                <ul>
+                    <li v-for="item in navList" :key="item.id"
+                        @click="$emit('clickMenu', item.value)"
+                    >
+                        {{ item.text }}
+                    </li>
+                </ul>
+            </div>
         </nav>
-        <div class="search-bar col-1 col-lg-4">
-            <div class="search-inner">
-                <input type="text" v-model="inputSearch" @keyup.enter="$emit('search', inputSearch)">
-                <i class="fas fa-search search-icon" @click="$emit('search', inputSearch)"></i>
-                <div class="user-profile">BAMBINI</div>
-                <i class="fas fa-bell notice-icon"></i>
-                <div class="user-img"></div>
-                <i class="fas fa-sort-down menu-icon"></i>
+        <div class="search-bar col-3 col-md-1 col-lg-4">
+            <div class="burger-menu d-block d-lg-none" >
+                <i class="fas fa-bars"></i>
+            </div>
+            <div class="d-none d-lg-block">
+                <div class="search-inner">
+                    <input type="text" v-model="inputSearch" @keyup.enter="$emit('search', inputSearch)">
+                    <i class="fas fa-search search-icon" @click="$emit('search', inputSearch)"></i>
+                    <div class="user-profile">BAMBINI</div>
+                    <i class="fas fa-bell notice-icon"></i>
+                    <div class="user-img"></div>
+                    <i class="fas fa-sort-down menu-icon"></i>
+                </div>
             </div>
            
         </div>
@@ -34,9 +41,16 @@ export default {
         navList: Array,
         // inputSearch: String
     },
+
     data() {
         return {
             inputSearch: ''
+        }
+    },
+
+    methods: {
+        viewBurger() {
+
         }
     }
 }
@@ -79,6 +93,10 @@ export default {
         .search-bar {
             color: $white;
 
+            .burger-menu {
+                text-align: right;
+            }
+
             .search-inner {
                 display: flex;
                 justify-content: space-around;
@@ -104,4 +122,5 @@ export default {
             }
         }
     }
+
 </style>
