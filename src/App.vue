@@ -3,6 +3,7 @@
 
     <Header :navList="navList" 
       @search="searchFilm" 
+
       @clickMenu="changeView"
     />
     <Main :films="filteredFilms" 
@@ -57,6 +58,7 @@ export default {
       recently: [],
       seriesFound: [],
       filmsFound: [],
+      
       flagSearch: false,
       myFilms: [
         {
@@ -144,6 +146,10 @@ export default {
       // inputSearch = '';
       // TODO: da sistemare
     },
+
+    // viewSearchBar() {
+
+    // },
 
     // metodi per dinamicizzare API
     apiURL(string, key, input) {

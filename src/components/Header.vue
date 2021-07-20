@@ -9,19 +9,25 @@
                     <li v-for="item in navList" :key="item.id"
                         @click="$emit('clickMenu', item.value)"
                     >
-                        {{ item.text }}
+                        <a href="#">
+                            {{ item.text }}
+                        </a>
+                        <div class="line-red"></div>
                     </li>
                 </ul>
             </div>
         </nav>
-        <div class="search-bar col-3 col-md-1 col-lg-4">
+        <div class="col-2">
+            <input v-if="flagViewSearchBar" type="text" ref="input" v-model="inputSearch" @keyup.enter="$emit('search', inputSearch)">
+        </div>
+        <div class="search-bar col-4 col-md-2 col-lg-3">
             <div class="burger-menu d-block d-lg-none" >
                 <i class="fas fa-bars"></i>
             </div>
             <div class="d-none d-lg-block">
                 <div class="search-inner">
-                    <input type="text" v-model="inputSearch" @keyup.enter="$emit('search', inputSearch)">
-                    <i class="fas fa-search search-icon" @click="$emit('search', inputSearch)"></i>
+                    <!-- <input v-if="flagViewSearchBar" type="text" v-model="inputSearch" @keyup.enter="$emit('search', inputSearch)"> -->
+                    <i class="fas fa-search search-icon" @click="viewSearchBar"></i>
                     <div class="user-profile">BAMBINI</div>
                     <i class="fas fa-bell notice-icon"></i>
                     <div class="user-img"></div>
@@ -44,13 +50,14 @@ export default {
 
     data() {
         return {
-            inputSearch: ''
+            inputSearch: '',
+            flagViewSearchBar: false,
         }
     },
 
     methods: {
-        viewBurger() {
-
+        viewSearchBar() {
+            this.flagViewSearchBar = !this.flagViewSearchBar;
         }
     }
 }
@@ -69,23 +76,49 @@ export default {
             }
         }
 
+        input {
+            border: 1px solid $white;
+            background-color: $bg-color;
+            border-radius: 6px;
+            color: $white;
+        }
+
         nav {
+            
 
             ul {
                 display: flex;
                 align-items: center;
-                height: 100%;
+                
 
                 li {
-                    color: $link;
                     margin: 0 6px;
                     font-size: 12px;
                     font-weight: bold;
                     cursor: pointer;
 
-                    &:hover {
-                        color: $white;
+
+                    a {
+                        border-bottom: 2px solid rgba($color: #000000, $alpha: 0);
+                        color: $link;
+                        text-decoration: none;
+                        padding-bottom: 24px;
+
+                        &:hover {
+                            color: $white;
+                        }
+
+                        &:focus {
+                            color: $white;
+                            border-bottom: 2px solid $red;
+                        }
+
+                        &:active {
+                            color: $red;
+    
+                        }
                     }
+
                 }
             }
         }
@@ -107,13 +140,6 @@ export default {
                     width: 25px;
                     height: 25px;
                     background-color: seagreen;
-                }
-
-                input {
-                    border: 1px solid $white;
-                    background-color: $bg-color;
-                    border-radius: 6px;
-                    color: $white;
                 }
 
                 .search-icon {
