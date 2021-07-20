@@ -1,6 +1,9 @@
 <template>
     <main class="row">
-        <div v-if="flagFilmsFound || flagSeriesFound" class="no-search col-12">Nessun risultato trovato</div>
+        <div v-if="flagSearch" class="no-search col-12">
+            <div>Nessun risultato trovato</div>
+            <div>Potresti guardare...</div>
+        </div>
         <div v-if="filmsFound.length === 0 || seriesFound.length === 0" class="col-12">
             <div class="row">
                 <Film v-for="film in films" :key="film.id"
@@ -53,8 +56,7 @@ export default {
         films: Array,
         filmsFound: Array,
         seriesFound: Array,
-        flagSeriesFound: Boolean,
-        flagFilmsFound: Boolean
+        flagSearch: Boolean
     },
 
     methods: {

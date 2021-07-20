@@ -8,8 +8,7 @@
     <Main :films="filteredFilms" 
       :filmsFound="filmsFound"
       :seriesFound="seriesFound"
-      :flagSeriesFound="flagSeriesFound"
-      :flagFilmsFound="flagFilmsFound"
+      :flagSearch="flagSearch"
     />
 
   </div>
@@ -58,8 +57,7 @@ export default {
       recently: [],
       seriesFound: [],
       filmsFound: [],
-      flagSeriesFound: false,
-      flagFilmsFound: false,
+      flagSearch: false,
       myFilms: [
         {
           title: 'Aggiungi Contenuti',
@@ -118,23 +116,27 @@ export default {
 
         this.filteredFilms = this.homeList;
         this.flagSeriesFound = false;
-        this.flagFilmsFound= false;
+        this.flagSearch= false;
         this.filmsFound = [];
         this.seriesFound = [];
       } else {
         axios.get(this.apiURL('/search/movie', 'query', inputSearch)).then((res) => {
           this.filmsFound = res.data.results;
-          if (this.filmsFound.length > 0) {
-            this.flagFilmsFound = true;
+
+          if (this.filmsFound.length === 0) {
+            this.flagSearch = true;
+            console.log('entro');
+          } else {
+            this.flagSearch = false;
           }
 
         })
 
         axios.get(this.apiURL('/search/tv', 'query', inputSearch)).then((res) => {
           this.seriesFound = res.data.results;
-          if (this.seriesFound.length > 0) {
-            this.flagSeriesFound = true;
-          }
+          // if (this.seriesFound.length > 0) {
+          //   this.flagSeriesFound = true;
+          // }
 
         })
       }
