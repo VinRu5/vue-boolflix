@@ -18,7 +18,7 @@
             </div>
         </nav>
         <div class="col-2">
-            <input v-if="flagViewSearchBar" type="text" ref="input" v-model="inputSearch" @keyup.enter="passValue">
+            <input v-if="flagViewSearchBar" type="text" id="inputID" ref="inputID" v-model="inputSearch" @keyup.enter="passValue" >
         </div>
         <div class="search-bar col-4 col-md-2 col-lg-3">
             <div class="burger-menu d-block d-lg-none" >
@@ -57,12 +57,24 @@ export default {
     methods: {
         viewSearchBar() {
             this.flagViewSearchBar = !this.flagViewSearchBar;
+
+            if(this.flagViewSearchBar) {
+                this.$nextTick(() => {
+                    this.getFocus();
+    
+                })
+            }
         },
 
         passValue() {
             this.$emit('search', this.inputSearch);
             this.inputSearch = "";
         },
+
+        getFocus() {
+            console.log(this.$refs);
+            this.$refs.inputID.focus();
+        }
     }
 }
 </script>
