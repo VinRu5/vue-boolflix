@@ -42,11 +42,6 @@ export default {
       })
   },
 
-  computed: {
-    
-    
-  },
-
   data() {
     return {
       popularFilms: [],
@@ -109,46 +104,54 @@ export default {
   },
 
   methods: {
+
+    // funzione per resettare gli array dei film e serie trovati
     resetFound() {
+
       if (this.filmsFound.length > 0 || this.seriesFound.length > 0) {
+        
         this.filmsFound = [];
         this.seriesFound = [];
-        console.log('cancello');
+
+      }
+
+    },
+
+    // funzione per attivare il flagSearch => ricerca effettuata
+    getFlagSearch(array) {
+      if (array.length === 0) {
+        this.flagSearch = true;
+
+      } else {
+        this.flagSearch = false;
       }
     },
 
+    // funzione per effettuare la ricerca sulle api
     searchFilm(inputSearch) {
-        console.log(inputSearch.trim().length);
+
+      // se l'input è vuoto resetto la pagina
       if (inputSearch.trim().length === 0) {
 
         this.filteredFilms = this.homeList;
         this.flagSearch= false;
         this.resetFound();
 
+      // altrimenti effettuo le chiamate API per popolare gli array
       } else {
-        
-        console.log(inputSearch)
-        axios.get(this.apiURL('/search/movie', 'query', inputSearch)).then((res) => {
-          this.filmsFound = res.data.results;
 
-          if (this.filmsFound.length === 0) {
-            this.flagSearch = true;
-            console.log('entro');
-          } else {
-            this.flagSearch = false;
-          }
+        axios.get(this.apiURL('/search/movie', 'query', inputSearch)).then((res) => {
+
+          this.filmsFound = res.data.results;
+          this.getFlagSearch(this.filmsFound);
 
         })
 
         axios.get(this.apiURL('/search/tv', 'query', inputSearch)).then((res) => {
-          this.seriesFound = res.data.results;
 
-          if (this.filmsFound.length === 0) {
-            this.flagSearch = true;
-            console.log('serie');
-          } else {
-            this.flagSearch = false;
-          }
+          this.seriesFound = res.data.results;
+          this.getFlagSearch(this.seriesFound);
+
         })
       }
     },
@@ -156,10 +159,8 @@ export default {
     // metodi per dinamicizzare API
     apiURL(string, key, input) {
       if (typeof input === 'undefined' || typeof key === 'undefined') {
-
         return `https://api.themoviedb.org/3${string}?api_key=f10ccd72e0d02b50384e2e5f35ea0e3b`
       } else {
-          console.log(`https://api.themoviedb.org/3${string}?api_key=f10ccd72e0d02b50384e2e5f35ea0e3b&${key}=${input}`)
         return `https://api.themoviedb.org/3${string}?api_key=f10ccd72e0d02b50384e2e5f35ea0e3b&${key}=${input}`
       }
     },

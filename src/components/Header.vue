@@ -1,8 +1,10 @@
 <template>
     <header class="row align-items-center">
+        <!-- logo netflix -->
         <div class="logo-container col-2 col-md-1">
             <img src="../assets/Netflix-Logo.png" alt="Logo Netflix">
         </div>
+        <!-- navbar con divisione in generi -->
         <nav class="col">
             <div class="d-none d-md-block">
                 <ul>
@@ -17,6 +19,7 @@
                 </ul>
             </div>
         </nav>
+        <!-- search bar per effettuare la ricerca e info utente -->
         <div class="col-2">
             <input v-if="flagViewSearchBar" type="text" ref="inputID" v-model="inputSearch" @keyup.enter="passValue" >
         </div>
@@ -54,6 +57,7 @@ export default {
     },
 
     methods: {
+        // funzione per far comparire e scomparire l'input
         viewSearchBar() {
             this.flagViewSearchBar = !this.flagViewSearchBar;
 
@@ -65,13 +69,14 @@ export default {
             }
         },
 
+        // funzione per passare il valore di input all'App e resettarlo
         passValue() {
             this.$emit('search', this.inputSearch);
             this.inputSearch = "";
         },
 
+        // funzione per fare il focus sull'input
         getFocus() {
-            console.log(this.$refs);
             this.$refs.inputID.focus();
         }
     }
@@ -154,7 +159,7 @@ export default {
                 .user-img {
                     width: 25px;
                     height: 25px;
-                    background-color: seagreen;
+                    background-color: rgb(46, 139, 87);
                 }
 
                 .search-icon {

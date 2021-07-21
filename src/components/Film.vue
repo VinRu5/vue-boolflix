@@ -28,6 +28,7 @@
 <script>
 export default {
     name: 'Film',
+
     props: {
         imgURL: String,
         title: String,
@@ -36,6 +37,7 @@ export default {
         language: String,
         dateArrival: String
     },
+
     data() {
         return {
             voteToStars: [],
@@ -43,38 +45,40 @@ export default {
 
         }
     },
+
     computed: {
         flagNation() {
-            
             return require(`../assets/${this.language}.png`)
         },
 
+        // computed per generare il giorno che verifica se un film è "un nuovo arrivo"
         getDay() {
             
             let year = parseInt(this.$dayjs().format('YYYY'));
-            const month = parseInt(this.$dayjs().format('MM'));
-          
-            let newMonth = null;
+            let month = parseInt(this.$dayjs().format('MM'));
 
-            if(month === 1) {
-                newMonth = 11;
-                year -= 1;
-            } else if (month === 2) {
-                newMonth = 12;
-                year -= 1;
+            if (month !== 1 && month !== 2) {
+                month -= 2;
+                if (month > 0 && month < 10) {
+                    month = `0${month}`;
+                }
             } else {
-                
-                newMonth = month - 2;
-                if (newMonth > 0 && newMonth < 10) {
-                    newMonth = `0${newMonth}`;
+                switch (month) {
+                    case 1: 
+                        month = 11;
+                        year -= 1;
+                        break;
+                    case 2:
+                        month = 12;
+                        year -= 1;
+                        break;
                 }
             }
 
-            let stringDay = `${year}-${newMonth}`;
-
-            return stringDay
+            return `${year}-${month}`;
         },
 
+        // computed per generare la data di rilascio del film
         dateArrivalsString() {
             let dateArrivalsList = [];
 
@@ -86,7 +90,9 @@ export default {
             return `${dateArrivalsList[0]}-${dateArrivalsList[1]}`;
         }
     },
+
     methods: {
+        // funzione per generare le stelle del voto
         calcStars() {
             let blackStar = Math.round(this.vote / 2);
             let whiteStar = 5 - blackStar;
@@ -117,10 +123,11 @@ export default {
 
         },
 
+        // funzione per definire se un film è "un nuovo arrivo"
         newArrivals() {
-            console.log(this.dateArrivalsString)
+            
             if (this.dateArrivalsString === this.getDay) {
-                console.log('true')
+
                 return true;
             }
 
@@ -129,6 +136,7 @@ export default {
         },
 
     },
+
     created() {
         this.calcStars();
     }

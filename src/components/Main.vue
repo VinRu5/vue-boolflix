@@ -1,9 +1,11 @@
 <template>
     <main class="row">
+        <!-- div per avvisare che la ricerca non ha prodotto risultato -->
         <div v-if="flagSearch" class="no-search col-12">
             <div>Nessun risultato trovato</div>
             <div>Potresti guardare...</div>
         </div>
+        <!-- film e seria da mostrare quando NON si è effettuata la ricerca -->
         <div v-if="filmsFound.length === 0 && seriesFound.length === 0" class="col-12">
             <div class="row">
                 <Film v-for="film in films" :key="film.id"
@@ -17,6 +19,7 @@
                 />
             </div>
         </div>
+        <!-- film e seria da mostrare quando si è effettuata la ricerca -->
         <div v-else class="col-12">
             <div class="row">
                 <div class="title-section col-12">Film</div>
