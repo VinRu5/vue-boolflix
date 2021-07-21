@@ -47,6 +47,43 @@ export default {
         flagNation() {
             
             return require(`../assets/${this.language}.png`)
+        },
+
+        getDay() {
+            
+            let year = parseInt(this.$dayjs().format('YYYY'));
+            const month = parseInt(this.$dayjs().format('MM'));
+          
+            let newMonth = null;
+
+            if(month === 1) {
+                newMonth = 11;
+                year -= 1;
+            } else if (month === 2) {
+                newMonth = 12;
+                year -= 1;
+            } else {
+                
+                newMonth = month - 2;
+                if (newMonth > 0 && newMonth < 10) {
+                    newMonth = `0${newMonth}`;
+                }
+            }
+
+            let stringDay = `${year}-${newMonth}`;
+
+            return stringDay
+        },
+
+        dateArrivalsString() {
+            let dateArrivalsList = [];
+
+            if (typeof this.dateArrival !== 'undefined') {
+                dateArrivalsList = this.dateArrival.split('-');   
+            } else {
+                dateArrivalsList = ['0000', '00'];
+            }
+            return `${dateArrivalsList[0]}-${dateArrivalsList[1]}`;
         }
     },
     methods: {
@@ -80,51 +117,17 @@ export default {
 
         },
 
-        getDay() {
-            console.log(this.$dayjs().format('YYYY-MM-DD'));
-            let year = parseInt(this.$dayjs().format('YYYY'));
-            const month = parseInt(this.$dayjs().format('MM'));
-          
-            let newMonth = null;
-
-            if(month === 1) {
-                newMonth = 11;
-                year -= 1;
-            } else {
-                
-                newMonth = month - 2;
-                if (newMonth > 0 && newMonth < 10) {
-                    newMonth = `0${newMonth}`;
-                }
-            }
-
-            let stringDay = `${year}-${newMonth}`;
-
-            console.log(stringDay);
-            return stringDay
-        },
-
         newArrivals() {
-            let newArrivalDay = this.getDay();
-            
-            let dateArrivalsList = this.dateArrival.split('-');
-            let dateArrivalsString = `${dateArrivalsList[0]}-${dateArrivalsList[1]}`;
-            console.log(this.title, dateArrivalsString);
-
-            if (dateArrivalsString === newArrivalDay) {
+            console.log(this.dateArrivalsString)
+            if (this.dateArrivalsString === this.getDay) {
                 console.log('true')
                 return true;
             }
-
 
             return false;
 
         },
 
-        clickTest() {
-            this.getDay();
-
-        }
     },
     created() {
         this.calcStars();

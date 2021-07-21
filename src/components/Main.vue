@@ -4,7 +4,7 @@
             <div>Nessun risultato trovato</div>
             <div>Potresti guardare...</div>
         </div>
-        <div v-if="filmsFound.length === 0 || seriesFound.length === 0" class="col-12">
+        <div v-if="filmsFound.length === 0 && seriesFound.length === 0" class="col-12">
             <div class="row">
                 <Film v-for="film in films" :key="film.id"
                     :imgURL="imgNull(film)"
