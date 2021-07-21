@@ -12,6 +12,7 @@
                     :originalTitle="film.original_title || film.original_name"
                     :vote="film.vote_average"
                     :language="film.original_language"
+                    :dateArrival="film.release_date || film.first_air_date"
                     class="col-6 col-md-3 col-lg-2 px-1"
                 />
             </div>
@@ -25,6 +26,7 @@
                     :originalTitle="film.original_title || film.original_name"
                     :vote="film.vote_average"
                     :language="film.original_language"
+                    :dateArrival="film.release_date || film.first_air_date"
                     class="col-6 col-md-3 col-lg-2 px-1"
                 />
             </div>
@@ -36,6 +38,7 @@
                     :originalTitle="film.original_title || film.original_name"
                     :vote="film.vote_average"
                     :language="film.original_language"
+                    :dateArrival="film.release_date || film.first_air_date"
                     class="col-6 col-md-3 col-lg-2 px-1"
                 />
             </div>

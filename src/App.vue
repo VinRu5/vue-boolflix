@@ -3,7 +3,6 @@
 
     <Header :navList="navList" 
       @search="searchFilm" 
-
       @clickMenu="changeView"
     />
     <Main :films="filteredFilms" 
@@ -119,13 +118,16 @@ export default {
     },
 
     searchFilm(inputSearch) {
-
+        console.log(inputSearch.trim().length);
       if (inputSearch.trim().length === 0) {
 
         this.filteredFilms = this.homeList;
         this.flagSearch= false;
         this.resetFound();
+
       } else {
+        
+        console.log(inputSearch)
         axios.get(this.apiURL('/search/movie', 'query', inputSearch)).then((res) => {
           this.filmsFound = res.data.results;
 
@@ -141,6 +143,12 @@ export default {
         axios.get(this.apiURL('/search/tv', 'query', inputSearch)).then((res) => {
           this.seriesFound = res.data.results;
 
+          if (this.filmsFound.length === 0) {
+            this.flagSearch = true;
+            console.log('serie');
+          } else {
+            this.flagSearch = false;
+          }
         })
       }
     },
@@ -151,7 +159,7 @@ export default {
 
         return `https://api.themoviedb.org/3${string}?api_key=f10ccd72e0d02b50384e2e5f35ea0e3b`
       } else {
-
+          console.log(`https://api.themoviedb.org/3${string}?api_key=f10ccd72e0d02b50384e2e5f35ea0e3b&${key}=${input}`)
         return `https://api.themoviedb.org/3${string}?api_key=f10ccd72e0d02b50384e2e5f35ea0e3b&${key}=${input}`
       }
     },

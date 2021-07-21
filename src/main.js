@@ -1,17 +1,22 @@
 import 'bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
-// import { library } from '@fortawesome/fontawesome-svg-core'
-// import { faUserSecret, faSearch, faBell, faSortDown } from '@fortawesome/free-solid-svg-icons'
-// import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import '@fortawesome/fontawesome-free/css/all.css'
+import Dayjs from 'vue-dayjs';
 import Vue from 'vue'
 import App from './App.vue'
 
-// library.add(faUserSecret, faSearch, faBell, faSortDown)
-
-// Vue.component('font-awesome-icon', FontAwesomeIcon)
 
 Vue.config.productionTip = false
+
+Vue.use(Dayjs, {
+  lang: 'en',
+  filters: {
+    ago: 'ago',
+  },
+  directives: {
+    countdown: 'countdown'
+  }
+});
 
 new Vue({
   render: h => h(App),

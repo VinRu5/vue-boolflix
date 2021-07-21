@@ -18,7 +18,7 @@
             </div>
         </nav>
         <div class="col-2">
-            <input v-if="flagViewSearchBar" type="text" id="inputID" ref="inputID" v-model="inputSearch" @keyup.enter="passValue" >
+            <input v-if="flagViewSearchBar" type="text" ref="inputID" v-model="inputSearch" @keyup.enter="passValue" >
         </div>
         <div class="search-bar col-4 col-md-2 col-lg-3">
             <div class="burger-menu d-block d-lg-none" >
@@ -26,7 +26,6 @@
             </div>
             <div class="d-none d-lg-block">
                 <div class="search-inner">
-                    <!-- <input v-if="flagViewSearchBar" type="text" v-model="inputSearch" @keyup.enter="$emit('search', inputSearch)"> -->
                     <i class="fas fa-search search-icon" @click="viewSearchBar"></i>
                     <div class="user-profile">BAMBINI</div>
                     <i class="fas fa-bell notice-icon"></i>

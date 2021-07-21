@@ -19,6 +19,9 @@
                 </div>
             </div>
         </div>
+        <div class="new-arrivals">
+            <span v-if="newArrivals()">Nuovi Arrivi</span>
+        </div>
     </div>
 </template>
 
@@ -30,7 +33,8 @@ export default {
         title: String,
         originalTitle: String,
         vote: Number,
-        language: String
+        language: String,
+        dateArrival: String
     },
     data() {
         return {
@@ -73,6 +77,52 @@ export default {
                 );
                 i++
             }
+
+        },
+
+        getDay() {
+            console.log(this.$dayjs().format('YYYY-MM-DD'));
+            let year = parseInt(this.$dayjs().format('YYYY'));
+            const month = parseInt(this.$dayjs().format('MM'));
+          
+            let newMonth = null;
+
+            if(month === 1) {
+                newMonth = 11;
+                year -= 1;
+            } else {
+                
+                newMonth = month - 2;
+                if (newMonth > 0 && newMonth < 10) {
+                    newMonth = `0${newMonth}`;
+                }
+            }
+
+            let stringDay = `${year}-${newMonth}`;
+
+            console.log(stringDay);
+            return stringDay
+        },
+
+        newArrivals() {
+            let newArrivalDay = this.getDay();
+            
+            let dateArrivalsList = this.dateArrival.split('-');
+            let dateArrivalsString = `${dateArrivalsList[0]}-${dateArrivalsList[1]}`;
+            console.log(this.title, dateArrivalsString);
+
+            if (dateArrivalsString === newArrivalDay) {
+                console.log('true')
+                return true;
+            }
+
+
+            return false;
+
+        },
+
+        clickTest() {
+            this.getDay();
 
         }
     },
@@ -165,6 +215,18 @@ export default {
                 }
             }
 
+        }
+
+        .new-arrivals {
+            padding: 6px;
+            
+            span {
+                background-color: $red;
+                padding: 3px 6px;
+                border-radius: 3px;
+                font-size: 13px;
+                font-weight: 600;
+            }
         }
     }
 
